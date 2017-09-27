@@ -396,3 +396,24 @@ int vita2d_pvf_text_height(vita2d_pvf *font, float scale, const char *text)
 	vita2d_pvf_text_dimensions(font, scale, text, NULL, &height);
 	return height;
 }
+
+
+char *vita2d_pvf_get_font_name(vita2d_pvf *font)
+{
+	ScePvfFontId fontid = font->font_handle_list[0].font_handle;
+	ScePvfFontInfo info;
+	ScePvfError error = scePvfGetFontInfo(fontid, &info);
+	if (error != 0)
+		return NULL;
+	return strdup((char *)info.fontStyleInfo.fontName);
+}
+
+char *vita2d_pvf_get_font_style(vita2d_pvf *font)
+{
+	ScePvfFontId fontid = font->font_handle_list[0].font_handle;
+	ScePvfFontInfo info;
+	ScePvfError error = scePvfGetFontInfo(fontid, &info);
+	if (error != 0)
+		return NULL;
+	return strdup((char *)info.fontStyleInfo.styleName);
+}
